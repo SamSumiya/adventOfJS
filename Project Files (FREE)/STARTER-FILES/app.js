@@ -9,22 +9,17 @@ const allMilliseconds = allSeconds * 1000
 startBtn.addEventListener('click', () => {
     if(ringColor.classList.contains('ending')) {
         ringColor.classList.remove('ending')
-        // while(allSeconds > 0) {
-            setInterval(() => {
-                let m = document.querySelector('.minutes').children[0].value
-                let s = document.querySelector('.seconds').children[0].value
-
-                allSeconds -= 1
-                remainingMinutes = Math.floor(allSeconds / 60) 
-                remainngSeconds = allSeconds % 60
-                console.log(remainingMinutes, remainngSeconds)
-                minutes.value = remainingMinutes
-                seconds.value = remainngSeconds
-                console.log(allSeconds, minutes, seconds)
-            }, 1000)
-        // } 
-        // console.log(allSeconds, minutes, seconds)
+           
     } else {
         ringColor.classList.add('ending')
+        setInterval(() => {
+            allSeconds -= 1
+            remainingMinutes = Math.floor(allSeconds / 60) 
+            remainngSeconds = allSeconds % 60
+            console.log(remainingMinutes, remainngSeconds)
+            minutes.value = remainingMinutes
+            seconds.value = remainngSeconds
+            console.log(allSeconds, minutes, seconds)
+        }, 1000)
     }
 })
