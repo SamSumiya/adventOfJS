@@ -23,9 +23,7 @@ const runPomodoro = () => {
 const myIntervalFunc = () => {
     if (minutes.value == '00' && seconds.value == '00') {
         if (startBtn.textContent === 'start') {
-            console.log(startBtn.textContent);
-            startBtn.textContent = 'stop' 
-            console.log(startBtn.textContent);
+            startBtn.textContent = 'stop'
         } else if (startBtn.textContent === 'stop') {
             startBtn.textContent = 'start'
         } else if (startBtn.textContent === 'reset') {
@@ -35,12 +33,19 @@ const myIntervalFunc = () => {
         minutes.value = '00'
         seconds.value = '03'
         totalSeconds = Number(minutes.value * MINUTESTOSECONDS) + Number(seconds.value)
-        setInterval(myClearIntervalFunc, 1000) // Why does this work?
+        setInterval(myClearIntervalFunc, 1000)
     } else {
+        if (startBtn.textContent === 'start') {
+            startBtn.textContent = 'stop'
+        } else if (startBtn.textContent === 'stop') {
+            startBtn.textContent = 'start'
+        } 
         setInterval(() => {
             {
                 if (totalSeconds > ONESECOND) {
-                    
+                    if (minutes.value === '00' && seconds.value === '00') {
+                        startBtn.textContent = 'reset'
+                    }
                     totalSeconds -= ONESECOND
                     remainingMinutes = Math.floor(totalSeconds / MINUTESTOSECONDS)
                     remainngSeconds = totalSeconds % MINUTESTOSECONDS
@@ -48,6 +53,9 @@ const myIntervalFunc = () => {
                     seconds.value = remainngSeconds
                     // console.log(totalSeconds, minutes, seconds)
                 } else if (totalSeconds === ONESECOND) {
+                    if (minutes.value === '00' && seconds.value === '00') {
+                        startBtn.textContent = 'reset'
+                    }
                     minutes.value = '00'
                     seconds.value = '00'
                     ringColor.classList.remove('ending')
@@ -58,7 +66,7 @@ const myIntervalFunc = () => {
 }
 
 function myClearIntervalFunc() {
-    if (minutes.value == '00' && seconds.value == '00') {
+    if (minutes.value === '00' && seconds.value === '00') {
         startBtn.textContent = 'reset'
     }
     clearInterval(myIntervalFunc)
