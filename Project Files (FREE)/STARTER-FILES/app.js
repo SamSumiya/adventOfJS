@@ -3,35 +3,35 @@ const startBtn = document.querySelector('.start')
 const settingBtn = document.querySelector('.settings')
 const ONESECOND = 1
 const TOTALMINUTES = 15
+const TESTTIME = .1
 const MINUTESTOSECONDS = 60
 let minutes = document.querySelector('.minutes').children[0]
 let seconds = document.querySelector('.seconds').children[0]
-let totalSeconds = 1 * 5
+let totalSeconds = TESTTIME * MINUTESTOSECONDS
 let pomodoroTimer
 let timerOn = false
-
 
 
 function displayPomodoro() {
     seconds.value = Number(totalSeconds % MINUTESTOSECONDS)
     minutes.value = Number(Math.floor(totalSeconds / MINUTESTOSECONDS))
-    if (seconds.value < 10 || minutes.value < 10) {
+    if (seconds.value < 10) {
         seconds.value = '0' + seconds.value
+    } if (minutes.value < 10) {
         minutes.value = '0' + minutes.value
-    }
+    } 
     if (minutes.value == '00' && seconds.value == '00') {
         ringColor.classList.remove('ending')
         startBtn.textContent = 'start'
     }
 }
 
-
 function startPomodoro() {
     clearInterval(pomodoroTimer) // This pomodoroTimer is initialized on the global scope
     pomodoroTimer = setInterval(() => {
         displayPomodoro()
         if (totalSeconds !== 0) {
-            console.log(totalSeconds)
+            // console.log(totalSeconds)
             totalSeconds -= ONESECOND
         }
     }, 1000)
@@ -41,7 +41,7 @@ function toggleTimer() {
     if (timerOn) {
         timerOn = false
         startBtn.textContent = 'start'
-        ringColor.classList.remove('ending')
+        ringColor.classList.remove('ending') 
         clearInterval(pomodoroTimer)
     } else {
         timerOn = true
@@ -51,12 +51,16 @@ function toggleTimer() {
     }
 }
 
+function resetPomodoro() {
+    totalSeconds = TESTTIME * MINUTESTOSECONDS
+    startPomodoro()
+}
 
 
 
 // startBtn.addEventListener('click', () => startPomodoro())
 startBtn.addEventListener('click', () => toggleTimer())
-settingBtn.addEventListener('click', () => restart())
+settingBtn.addEventListener('click', () => resetPomodoro())
 // startBtn.addEventListener('click', () => toggleTimer())
 /*
 const runPomodoro = () => {
