@@ -6,35 +6,49 @@ const MINUTESTOSECONDS = 60
 let minutes = document.querySelector('.minutes').children[0]
 let seconds = document.querySelector('.seconds').children[0]
 let totalSeconds = 1 * 5
-let pomodoroTimer; 
+let pomodoroTimer
+let timerOn = false
 
 
 
 function displayPomodoro() {
-    seconds.value = Number(totalSeconds % MINUTESTOSECONDS) 
-    minutes.value = Number(Math.floor(totalSeconds / MINUTESTOSECONDS)) 
+    seconds.value = Number(totalSeconds % MINUTESTOSECONDS)
+    minutes.value = Number(Math.floor(totalSeconds / MINUTESTOSECONDS))
     if (seconds.value < 10 || minutes.value < 10) {
         seconds.value = '0' + seconds.value
-        minutes.value = '0' + minutes.value 
+        minutes.value = '0' + minutes.value
     }
 }
+
 
 
 function startPomodoro() {
     clearInterval(pomodoroTimer) // This pomodoroTimer is initialized on the global scope
     pomodoroTimer = setInterval(() => {
-        displayPomodoro() 
-        if (totalSeconds > 0) {
+        displayPomodoro()
+        if (totalSeconds !== 0) {
             console.log(totalSeconds)
             totalSeconds -= ONESECOND
-        } 
-    }, 1000) 
-    // clearInterval(pomodoroTimer) 
+        }
+    }, 1000)
 }
 
-startBtn.addEventListener('click', () => startPomodoro())
+function toggleTimer() {
+    if (timerOn) {
+        timerOn = false 
+        startBtn.textContent = 'start'
+        clearInterval(pomodoroTimer)
+    } else {
+        timerOn = true
+        startBtn.textContent = 'pause'
+        startPomodoro()
+    }
+}
 
-/* 
+// startBtn.addEventListener('click', () => startPomodoro())
+startBtn.addEventListener('click', () => toggleTimer())
+// startBtn.addEventListener('click', () => toggleTimer())
+/*
 const runPomodoro = () => {
     if (ringColor.classList.contains('ending')) {
         ringColor.classList.remove('ending')
@@ -69,7 +83,7 @@ const myIntervalFunc = () => {
         if (startBtn.textContent === 'start') {
             myClearIntervalFunc(secondInterval)
             startBtn.textContent = 'pause'
-            
+
             // myClearIntervalFunc(firstInterval)
         } else if (startBtn.textContent === 'pause') {
             myClearIntervalFunc(secondInterval)
@@ -88,16 +102,16 @@ const myIntervalFunc = () => {
     //     minutes.value = '00'
     //     seconds.value = totalSeconds - 1
     //     totalSeconds = Number(minutes.value * MINUTESTOSECONDS) + Number(seconds.value)
-    //     setInterval(() => { 
+    //     setInterval(() => {
     //         if (totalSeconds > ONESECOND) {
     //             totalSeconds -= ONESECOND
     //             remainingMinutes = Math.floor(totalSeconds / MINUTESTOSECONDS)
     //             remainngSeconds = totalSeconds % MINUTESTOSECONDS
     //             minutes.value = remainingMinutes
     //             seconds.value = remainngSeconds
-    //         }   
+    //         }
     //     }, 1000)
-    // } 
+    // }
     else {
         const firstInterval = setInterval(() => {
             if (totalSeconds > ONESECOND) {
@@ -139,6 +153,4 @@ function myClearIntervalFunc(x) {
 }
 
 startBtn.addEventListener('click', () => runPomodoro())
-
-
-*/ 
+*/
