@@ -10,21 +10,19 @@ let totalSeconds = 1 * 3
 const runPomodoro = () => {
     if (ringColor.classList.contains('ending')) {
         ringColor.classList.remove('ending')
-        myIntervalFunc()
+        myClearIntervalFunc()
     } else {
         ringColor.classList.add('ending')
-        myIntervalFunc()
+        myClearIntervalFunc()
     }
 }
 
 const myIntervalFunc = () => {
-    // const stopInterval = setInterval(myClearIntervalFunc, 1000)
     if (minutes.value == '00' && seconds.value == '00') {
         if (startBtn.textContent === 'start') {
             startBtn.textContent = 'stop'
         } else if (startBtn.textContent === 'stop') {
             startBtn.textContent = 'start'
-            // myClearIntervalFunc()
         } else if (startBtn.textContent === 'reset') {
             startBtn.textContent = 'stop'
         }
@@ -51,12 +49,10 @@ const myIntervalFunc = () => {
                     minutes.value = remainingMinutes
                     seconds.value = remainngSeconds
                 } else if (totalSeconds === ONESECOND) {
-                    if (minutes.value === '00' && seconds.value === '00') {
-                        startBtn.textContent = 'reset'
-                    }
                     minutes.value = '00'
                     seconds.value = '00'
                     ringColor.classList.remove('ending')
+                    startBtn.textContent = 'reset'
                 }
             }
         }, 1000)
@@ -67,11 +63,7 @@ function myClearIntervalFunc() {
     if (minutes.value === '00' && seconds.value === '00') {
         startBtn.textContent = 'reset'
     }
-    clearInterval(myIntervalFunc)
-}
-
-function stopPomodoroTimer() {
-    clearInterval(myIntervalFunc) 
+    myIntervalFunc()
 }
 
 startBtn.addEventListener('click', () => runPomodoro())
