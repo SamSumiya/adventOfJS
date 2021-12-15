@@ -6,20 +6,33 @@ const MINUTESTOSECONDS = 60
 let minutes = document.querySelector('.minutes').children[0]
 let seconds = document.querySelector('.seconds').children[0]
 let totalSeconds = 1 * 5
+let pomodoroTimer; 
 
 
 
-function displayTime() {
-    seconds.value = totalSeconds % MINUTESTOSECONDS
-    minutes.value = 0
+function displayPomodoro() {
+    seconds.value = Number(totalSeconds % MINUTESTOSECONDS) 
+    minutes.value = Number(Math.floor(totalSeconds / MINUTESTOSECONDS)) 
     if (seconds.value < 10 || minutes.value < 10) {
         seconds.value = '0' + seconds.value
-        minutes.value = '0' + minutes.value
-    } 
+        minutes.value = '0' + minutes.value 
+    }
 }
 
 
-startBtn.addEventListener('click', () => displayTime())
+function startPomodoro() {
+    clearInterval(pomodoroTimer) 
+    pomodoroTimer = setInterval(() => {
+        displayPomodoro() 
+        if (totalSeconds > 0) {
+            console.log(totalSeconds)
+            totalSeconds -= ONESECOND
+        } 
+    }, 1000) 
+    // clearInterval(pomodoroTimer) 
+}
+
+startBtn.addEventListener('click', () => startPomodoro())
 
 /* 
 const runPomodoro = () => {
