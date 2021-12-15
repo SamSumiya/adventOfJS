@@ -1,5 +1,6 @@
 const ringColor = document.querySelector('.ring')
 const startBtn = document.querySelector('.start')
+const settingBtn = document.querySelector('.settings')
 const ONESECOND = 1
 const TOTALMINUTES = 15
 const MINUTESTOSECONDS = 60
@@ -17,7 +18,11 @@ function displayPomodoro() {
     if (seconds.value < 10 || minutes.value < 10) {
         seconds.value = '0' + seconds.value
         minutes.value = '0' + minutes.value
-    }   
+    }
+    if (minutes.value == '00' && seconds.value == '00') {
+        ringColor.classList.remove('ending')
+        startBtn.textContent = 'start'
+    }
 }
 
 
@@ -28,13 +33,13 @@ function startPomodoro() {
         if (totalSeconds !== 0) {
             console.log(totalSeconds)
             totalSeconds -= ONESECOND
-        } 
-    }, 1000) 
+        }
+    }, 1000)
 }
 
 function toggleTimer() {
     if (timerOn) {
-        timerOn = false 
+        timerOn = false
         startBtn.textContent = 'start'
         ringColor.classList.remove('ending')
         clearInterval(pomodoroTimer)
@@ -46,8 +51,12 @@ function toggleTimer() {
     }
 }
 
+
+
+
 // startBtn.addEventListener('click', () => startPomodoro())
 startBtn.addEventListener('click', () => toggleTimer())
+settingBtn.addEventListener('click', () => restart())
 // startBtn.addEventListener('click', () => toggleTimer())
 /*
 const runPomodoro = () => {
