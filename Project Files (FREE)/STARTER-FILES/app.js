@@ -17,9 +17,8 @@ function displayPomodoro() {
     if (seconds.value < 10 || minutes.value < 10) {
         seconds.value = '0' + seconds.value
         minutes.value = '0' + minutes.value
-    }
+    }   
 }
-
 
 
 function startPomodoro() {
@@ -29,18 +28,20 @@ function startPomodoro() {
         if (totalSeconds !== 0) {
             console.log(totalSeconds)
             totalSeconds -= ONESECOND
-        }
-    }, 1000)
+        } 
+    }, 1000) 
 }
 
 function toggleTimer() {
     if (timerOn) {
         timerOn = false 
         startBtn.textContent = 'start'
+        ringColor.classList.remove('ending')
         clearInterval(pomodoroTimer)
     } else {
         timerOn = true
         startBtn.textContent = 'pause'
+        ringColor.classList.add('ending')
         startPomodoro()
     }
 }
