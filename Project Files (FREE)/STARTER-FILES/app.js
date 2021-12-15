@@ -7,12 +7,9 @@ let minutes = document.querySelector('.minutes').children[0]
 let seconds = document.querySelector('.seconds').children[0]
 let totalSeconds = 1 * 3
 
-// console.log(startBtn);
-
 const runPomodoro = () => {
     if (ringColor.classList.contains('ending')) {
         ringColor.classList.remove('ending')
-        // console.log(startBtn.textContent);
         myIntervalFunc()
     } else {
         ringColor.classList.add('ending')
@@ -21,13 +18,13 @@ const runPomodoro = () => {
 }
 
 const myIntervalFunc = () => {
+    // const stopInterval = setInterval(myClearIntervalFunc, 1000)
     if (minutes.value == '00' && seconds.value == '00') {
         if (startBtn.textContent === 'start') {
-            console.log(startBtn.textContent);
-            startBtn.textContent = 'stop' 
-            console.log(startBtn.textContent);
+            startBtn.textContent = 'stop'
         } else if (startBtn.textContent === 'stop') {
             startBtn.textContent = 'start'
+            // myClearIntervalFunc()
         } else if (startBtn.textContent === 'reset') {
             startBtn.textContent = 'stop'
         }
@@ -35,19 +32,28 @@ const myIntervalFunc = () => {
         minutes.value = '00'
         seconds.value = '03'
         totalSeconds = Number(minutes.value * MINUTESTOSECONDS) + Number(seconds.value)
-        setInterval(myClearIntervalFunc, 1000) // Why does this work?
+    } else if (minutes.value == '00' && seconds.value != '00') {
+        minutes.value = '00'
+        seconds.value = totalSeconds - 1
+        totalSeconds = Number(minutes.value * MINUTESTOSECONDS) + Number(seconds.value)
     } else {
+        if (startBtn.textContent === 'start') {
+            startBtn.textContent = 'stop'
+        } else if (startBtn.textContent === 'stop') {
+            startBtn.textContent = 'start'
+        }
         setInterval(() => {
             {
                 if (totalSeconds > ONESECOND) {
-                    
                     totalSeconds -= ONESECOND
                     remainingMinutes = Math.floor(totalSeconds / MINUTESTOSECONDS)
                     remainngSeconds = totalSeconds % MINUTESTOSECONDS
                     minutes.value = remainingMinutes
                     seconds.value = remainngSeconds
-                    // console.log(totalSeconds, minutes, seconds)
                 } else if (totalSeconds === ONESECOND) {
+                    if (minutes.value === '00' && seconds.value === '00') {
+                        startBtn.textContent = 'reset'
+                    }
                     minutes.value = '00'
                     seconds.value = '00'
                     ringColor.classList.remove('ending')
@@ -58,10 +64,14 @@ const myIntervalFunc = () => {
 }
 
 function myClearIntervalFunc() {
-    if (minutes.value == '00' && seconds.value == '00') {
+    if (minutes.value === '00' && seconds.value === '00') {
         startBtn.textContent = 'reset'
     }
     clearInterval(myIntervalFunc)
+}
+
+function stopPomodoroTimer() {
+    clearInterval(myIntervalFunc) 
 }
 
 startBtn.addEventListener('click', () => runPomodoro())
