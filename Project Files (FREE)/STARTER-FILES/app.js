@@ -21,7 +21,7 @@ function displayPomodoro() {
 
 
 function startPomodoro() {
-    clearInterval(pomodoroTimer) 
+    clearInterval(pomodoroTimer) // This pomodoroTimer is initialized on the global scope
     pomodoroTimer = setInterval(() => {
         displayPomodoro() 
         if (totalSeconds > 0) {
