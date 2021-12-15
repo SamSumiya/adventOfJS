@@ -7,6 +7,21 @@ let minutes = document.querySelector('.minutes').children[0]
 let seconds = document.querySelector('.seconds').children[0]
 let totalSeconds = 1 * 5
 
+
+
+function displayTime() {
+    seconds.value = totalSeconds % MINUTESTOSECONDS
+    minutes.value = 0
+    if (seconds.value < 10 || minutes.value < 10) {
+        seconds.value = '0' + seconds.value
+        minutes.value = '0' + minutes.value
+    } 
+}
+
+
+startBtn.addEventListener('click', () => displayTime())
+
+/* 
 const runPomodoro = () => {
     if (ringColor.classList.contains('ending')) {
         ringColor.classList.remove('ending')
@@ -37,18 +52,25 @@ const myIntervalFunc = () => {
                 startBtn.textContent = 'reset'
             }
         }, 1000)
-            if (startBtn.textContent === 'start') {
-                startBtn.textContent = 'pause'
-                myClearIntervalFunc(firstInterval)
+        // myClearIntervalFunc(firstInterval)
+        if (startBtn.textContent === 'start') {
+            myClearIntervalFunc(secondInterval)
+            startBtn.textContent = 'pause'
+            
+            // myClearIntervalFunc(firstInterval)
         } else if (startBtn.textContent === 'pause') {
-                startBtn.textContent = 'start'
-                myClearIntervalFunc(secondInterval)
+            myClearIntervalFunc(secondInterval)
+            // myClearIntervalFunc(secondInterval)
+            startBtn.textContent = 'start'
+            // myClearIntervalFunc(firstInterval)
         } else if (startBtn.textContent === 'reset') {
-                startBtn.textContent = 'pause'
-                myClearIntervalFunc(secondInterval)
+            // myClearIntervalFunc(firstInterval)
+            myClearIntervalFunc(secondInterval)
+            startBtn.textContent = 'pause'
+            // myClearIntervalFunc(secondInterval)
         }
-        // clearInterval(secondInterval)
-    } 
+        // myClearIntervalFunc(secondInterval)
+    }
     // else if (minutes.value == '00' || seconds.value != '00') {
     //     minutes.value = '00'
     //     seconds.value = totalSeconds - 1
@@ -95,8 +117,15 @@ function myClearIntervalFunc(x) {
     //     startBtn.textContent = 'reset'
     // }
     // if (startBtn.textContent === 'pause') {
+    // if (startBtn.textContent === 'pause') {
+    //     startBtn.textContent = 'start'
+    //     clearInterval(x)
+    // } else {
         clearInterval(x)
     // }
 }
 
 startBtn.addEventListener('click', () => runPomodoro())
+
+
+*/ 
