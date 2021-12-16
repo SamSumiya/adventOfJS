@@ -10,7 +10,7 @@ let seconds = document.querySelector('.seconds').children[0]
 let totalSeconds = TESTTIME * MINUTESTOSECONDS
 let pomodoroTimer
 let timerOn = false
-
+// let editTimer = false
 
 function displayPomodoro() {
     seconds.value = Number(totalSeconds % MINUTESTOSECONDS)
@@ -63,10 +63,11 @@ function resetPomodoro() {
 }
 
 function editTimer() {
-    
+    console.log(minutes.value);
+    console.log(seconds.value)
+    totalSeconds = Number(minutes.value * MINUTESTOSECONDS) + Number(seconds.value)
+    startPomodoro()
 }
-
-
 
 
 // startBtn.addEventListener('click', () => startPomodoro())
@@ -80,7 +81,12 @@ startBtn.addEventListener('click', () => {
 })
 
 settingBtn.addEventListener('click', () => {
+//    if (editTimer) {
+
+//    } else {
+//        editTimer = true 
     editTimer()
+//    }
 })
 
 
