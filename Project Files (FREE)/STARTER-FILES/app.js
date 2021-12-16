@@ -1,27 +1,87 @@
 const ringColor = document.querySelector('.ring')
 const startBtn = document.querySelector('.start')
+const settingBtn = document.querySelector('.settings')
 const ONESECOND = 1
 const TOTALMINUTES = 15
+const TESTTIME = .1
 const MINUTESTOSECONDS = 60
 let minutes = document.querySelector('.minutes').children[0]
 let seconds = document.querySelector('.seconds').children[0]
-let totalSeconds = 1 * 5
+let totalSeconds = TESTTIME * MINUTESTOSECONDS
+let pomodoroTimer
+let timerOn = false
 
 
-
-function displayTime() {
-    seconds.value = totalSeconds % MINUTESTOSECONDS
-    minutes.value = 0
-    if (seconds.value < 10 || minutes.value < 10) {
+function displayPomodoro() {
+    seconds.value = Number(totalSeconds % MINUTESTOSECONDS)
+    minutes.value = Number(Math.floor(totalSeconds / MINUTESTOSECONDS))
+    if (seconds.value < 10) {
         seconds.value = '0' + seconds.value
+    } if (minutes.value < 10) {
         minutes.value = '0' + minutes.value
-    } 
+    }
+    if (minutes.value == '00' && seconds.value == '00') {
+        ringColor.classList.remove('ending')
+        startBtn.textContent = 'start'
+    }
+}
+
+function startPomodoro() {
+    clearInterval(pomodoroTimer) // This pomodoroTimer is initialized on the global scope
+    if (startBtn.textContent === 'start') {
+        ringColor.classList.add('ending')
+        startBtn.textContent = 'pause'
+    } else if (startBtn.textContent === 'pause') {
+        ringColor.classList.remove('ending')
+        startBtn.textContent = 'start'
+    }
+    pomodoroTimer = setInterval(() => {
+        displayPomodoro()
+        if (totalSeconds !== 0) {
+            totalSeconds -= ONESECOND
+        }
+    }, 1000)
+}
+
+function toggleTimer() {
+    if (timerOn) {
+        timerOn = false
+        startBtn.textContent = 'start'
+        ringColor.classList.remove('ending')
+        clearInterval(pomodoroTimer)
+    } else {
+        timerOn = true
+        startBtn.textContent = 'start'
+        ringColor.classList.add('ending')
+        startPomodoro()
+    }
+}
+
+function resetPomodoro() {
+    totalSeconds = TESTTIME * MINUTESTOSECONDS
+    startPomodoro()
 }
 
 
-startBtn.addEventListener('click', () => displayTime())
 
-/* 
+
+// startBtn.addEventListener('click', () => startPomodoro())
+
+startBtn.addEventListener('click', () => {
+    if(totalSeconds > 0) {
+        toggleTimer()
+    } else if (totalSeconds === 0) {
+        resetPomodoro()
+    }
+})
+
+// settingBtn.addEventListener('click', () => {
+    
+// })
+
+
+// startBtn.addEventListener('click', () => toggleTimer())
+/*
 const runPomodoro = () => {
     if (ringColor.classList.contains('ending')) {
         ringColor.classList.remove('ending')
@@ -56,7 +116,7 @@ const myIntervalFunc = () => {
         if (startBtn.textContent === 'start') {
             myClearIntervalFunc(secondInterval)
             startBtn.textContent = 'pause'
-            
+
             // myClearIntervalFunc(firstInterval)
         } else if (startBtn.textContent === 'pause') {
             myClearIntervalFunc(secondInterval)
@@ -75,16 +135,16 @@ const myIntervalFunc = () => {
     //     minutes.value = '00'
     //     seconds.value = totalSeconds - 1
     //     totalSeconds = Number(minutes.value * MINUTESTOSECONDS) + Number(seconds.value)
-    //     setInterval(() => { 
+    //     setInterval(() => {
     //         if (totalSeconds > ONESECOND) {
     //             totalSeconds -= ONESECOND
     //             remainingMinutes = Math.floor(totalSeconds / MINUTESTOSECONDS)
     //             remainngSeconds = totalSeconds % MINUTESTOSECONDS
     //             minutes.value = remainingMinutes
     //             seconds.value = remainngSeconds
-    //         }   
+    //         }
     //     }, 1000)
-    // } 
+    // }
     else {
         const firstInterval = setInterval(() => {
             if (totalSeconds > ONESECOND) {
@@ -126,6 +186,4 @@ function myClearIntervalFunc(x) {
 }
 
 startBtn.addEventListener('click', () => runPomodoro())
-
-
-*/ 
+*/
