@@ -62,6 +62,10 @@ function resetPomodoro() {
     startPomodoro()
 }
 
+function editTimer() {
+    
+}
+
 
 
 
@@ -75,9 +79,9 @@ startBtn.addEventListener('click', () => {
     }
 })
 
-// settingBtn.addEventListener('click', () => {
-    
-// })
+settingBtn.addEventListener('click', () => {
+    editTimer()
+})
 
 
 // startBtn.addEventListener('click', () => toggleTimer())
