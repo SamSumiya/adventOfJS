@@ -19,7 +19,7 @@ function displayPomodoro() {
         seconds.value = '0' + seconds.value
     } if (minutes.value < 10) {
         minutes.value = '0' + minutes.value
-    } 
+    }
     if (minutes.value == '00' && seconds.value == '00') {
         ringColor.classList.remove('ending')
         startBtn.textContent = 'start'
@@ -28,10 +28,16 @@ function displayPomodoro() {
 
 function startPomodoro() {
     clearInterval(pomodoroTimer) // This pomodoroTimer is initialized on the global scope
+    if (startBtn.textContent === 'start') {
+        ringColor.classList.add('ending')
+        startBtn.textContent = 'pause'
+    } else if (startBtn.textContent === 'pause') {
+        ringColor.classList.remove('ending')
+        startBtn.textContent = 'start'
+    }
     pomodoroTimer = setInterval(() => {
         displayPomodoro()
         if (totalSeconds !== 0) {
-            // console.log(totalSeconds)
             totalSeconds -= ONESECOND
         }
     }, 1000)
@@ -41,11 +47,11 @@ function toggleTimer() {
     if (timerOn) {
         timerOn = false
         startBtn.textContent = 'start'
-        ringColor.classList.remove('ending') 
+        ringColor.classList.remove('ending')
         clearInterval(pomodoroTimer)
     } else {
         timerOn = true
-        startBtn.textContent = 'pause'
+        startBtn.textContent = 'start'
         ringColor.classList.add('ending')
         startPomodoro()
     }
@@ -58,9 +64,22 @@ function resetPomodoro() {
 
 
 
+
 // startBtn.addEventListener('click', () => startPomodoro())
-startBtn.addEventListener('click', () => toggleTimer())
-settingBtn.addEventListener('click', () => resetPomodoro())
+
+startBtn.addEventListener('click', () => {
+    if(totalSeconds > 0) {
+        toggleTimer()
+    } else if (totalSeconds === 0) {
+        resetPomodoro()
+    }
+})
+
+// settingBtn.addEventListener('click', () => {
+    
+// })
+
+
 // startBtn.addEventListener('click', () => toggleTimer())
 /*
 const runPomodoro = () => {
