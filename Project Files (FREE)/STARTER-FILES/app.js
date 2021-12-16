@@ -10,7 +10,7 @@ let seconds = document.querySelector('.seconds').children[0]
 let totalSeconds = TESTTIME * MINUTESTOSECONDS
 let pomodoroTimer
 let timerOn = false
-
+// let editTimer = false
 
 function displayPomodoro() {
     seconds.value = Number(totalSeconds % MINUTESTOSECONDS)
@@ -28,6 +28,7 @@ function displayPomodoro() {
 
 function startPomodoro() {
     clearInterval(pomodoroTimer) // This pomodoroTimer is initialized on the global scope
+    totalSeconds = Number(minutes.value * MINUTESTOSECONDS) + Number(seconds.value)
     if (startBtn.textContent === 'start') {
         ringColor.classList.add('ending')
         startBtn.textContent = 'pause'
@@ -63,10 +64,12 @@ function resetPomodoro() {
 }
 
 function editTimer() {
-    
+    console.log(minutes.value);
+    console.log(seconds)
+
+    totalSeconds = Number(minutes.value * MINUTESTOSECONDS) + Number(seconds.value)
+    startPomodoro()
 }
-
-
 
 
 // startBtn.addEventListener('click', () => startPomodoro())
@@ -80,7 +83,12 @@ startBtn.addEventListener('click', () => {
 })
 
 settingBtn.addEventListener('click', () => {
-    editTimer()
+   if (startBtn.textContent === 'start') {
+        editTimer()
+   } 
+// else {
+//        editTimer = true 
+//    }
 })
 
 
