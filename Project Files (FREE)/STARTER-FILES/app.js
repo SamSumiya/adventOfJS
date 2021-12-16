@@ -75,7 +75,7 @@ function editTimer() {
 // startBtn.addEventListener('click', () => startPomodoro())
 
 startBtn.addEventListener('click', () => {
-    if(totalSeconds > 0) {
+    if (totalSeconds > 0) {
         toggleTimer()
     } else if (totalSeconds === 0) {
         resetPomodoro()
@@ -83,12 +83,12 @@ startBtn.addEventListener('click', () => {
 })
 
 settingBtn.addEventListener('click', () => {
-   if (startBtn.textContent === 'start') {
+    if (startBtn.textContent === 'start') {
         editTimer()
-   } 
-// else {
-//        editTimer = true 
-//    }
+    }
+    // else {
+    //        editTimer = true 
+    //    }
 })
 
 
